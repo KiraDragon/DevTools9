@@ -138,6 +138,21 @@ namespace Snake
             return food; 
         }
 
+        static public Position MakeTrap(Random rng, List<Position> obstacles, Queue<Position> snakeElements)
+        {
+            Position trap;
+            do
+            {
+                trap = new Position(rng.Next(6, Console.WindowHeight-6),
+                    rng.Next(6, Console.WindowWidth-6));
+            }
+            while (snakeElements.Contains(trap) || obstacles.Contains(trap));
+            Console.SetCursorPosition(trap.col, trap.row);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("#");
+            return trap; 
+        }
+
         static public Level WinCondition(string username, int userpoints, Level level)
         {
                 if(level == Level.One && userpoints >= 100)
@@ -317,6 +332,7 @@ namespace Snake
                     // Creates new food at a random position (as long as the position has not been taken by an obstacles or the snake)
             
                     Position food = MakeFood(randomNumbersGenerator, obstacles, snakeElements, 0); 
+                    Position trap = MakeTrap(randomNumbersGenerator, obstacles, snakeElements); 
 
                     // Redraws the snake
                     foreach (Position position in snakeElements)
@@ -399,6 +415,18 @@ namespace Snake
                         if (snakeNewHead.row < 5) snakeNewHead.row = Console.WindowHeight - 6;
                         if (snakeNewHead.row >= Console.WindowHeight - 5) snakeNewHead.row = 5;
                         if (snakeNewHead.col >= Console.WindowWidth - 5) snakeNewHead.col = 5;
+
+                        
+                        if (snakeNewHead.col == trap.col && snakeNewHead.row == trap.row)
+                        {
+                            Console.Beep();
+                            Console.SetCursorPosition(trap.col, trap.row);
+                            Console.Write(" ");
+                            //If the snake's head intercepts the location of the trap
+                            //make new trap
+                            trap = MakeTrap(randomNumbersGenerator, obstacles, snakeElements); 
+                            negativePoints += 100; 
+                        }
 
                         //Replace mainloop = GameOver(obstacles, snakeElements, snakeNewHead, userPoints, userName) with below code; 
                         if (snakeElements.Contains(snakeNewHead) || obstacles.Contains(snakeNewHead))
