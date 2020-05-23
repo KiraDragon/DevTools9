@@ -313,7 +313,8 @@ namespace Snake
             Console.BufferHeight = Console.WindowHeight;
             lastFoodTime = Environment.TickCount;
             int lives = 3;
-            while(true)
+
+            while (true)
             {
                 Level levelnow = Level.One; 
                 if(state == GameState.Start)
@@ -349,7 +350,30 @@ namespace Snake
                     // Loops the game till it ends
                     while (mainloop)
                     {
-                
+                        // top border
+                        Console.SetCursorPosition(5,4);
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("==============================================================================================================");
+                        // bottom border
+                        Console.SetCursorPosition(5, 25);
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("==============================================================================================================");
+                        
+                        // Left border 
+                        for (int x = 5; x < 26; x++)
+                        {
+                            Console.SetCursorPosition(4, x);
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.WriteLine("=");
+                        }
+                        // right border
+                        for (int x = 5; x < 26; x++)
+                        {
+                            Console.SetCursorPosition(115, x);
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.WriteLine("=");
+                        }
+
                         int determiner = randomNumbersGenerator.Next(3);
                         userPoints = (snakeElements.Count - 4) * 100 - negativePoints;
                         Console.SetCursorPosition(0, 0);

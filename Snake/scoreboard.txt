@@ -29,3 +29,4 @@ hi: 311 points
 : 116 points
 : 177 points
 : 0 points
+start : 311 points
