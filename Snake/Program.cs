@@ -153,6 +153,21 @@ namespace Snake
             return trap; 
         }
 
+        static public Position MakePowerUpFood(Random rng, List<Position> obstacles, Queue<Position> snakeElements)
+        {
+            Position PUF;
+            do
+            {
+                PUF = new Position(rng.Next(6, Console.WindowHeight-6),
+                    rng.Next(6, Console.WindowWidth-6));
+            }
+            while (snakeElements.Contains(PUF) || obstacles.Contains(PUF));
+            Console.SetCursorPosition(PUF.col, PUF.row);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("#");
+            return PUF; 
+        }
+
         static public Level WinCondition(string username, int userpoints, Level level)
         {
                 if(level == Level.One && userpoints >= 100)
@@ -334,6 +349,7 @@ namespace Snake
             
                     Position food = MakeFood(randomNumbersGenerator, obstacles, snakeElements, 0); 
                     Position trap = MakeTrap(randomNumbersGenerator, obstacles, snakeElements); 
+                    Position PUF = MakePowerUpFood(randomNumbersGenerator, obstacles, snakeElements); 
 
                     // Redraws the snake
                     foreach (Position position in snakeElements)
@@ -446,10 +462,27 @@ namespace Snake
                             Console.Beep();
                             Console.SetCursorPosition(trap.col, trap.row);
                             Console.Write(" ");
+                            Console.SetCursorPosition(PUF.col, PUF.row);
+                            Console.Write(" ");
                             //If the snake's head intercepts the location of the trap
-                            //make new trap
+                            //make new trap and new PUF
                             trap = MakeTrap(randomNumbersGenerator, obstacles, snakeElements); 
+                            PUF = MakePowerUpFood(randomNumbersGenerator, obstacles, snakeElements);
                             negativePoints += 100; 
+                        }
+
+                        if (snakeNewHead.col == PUF.col && snakeNewHead.row == PUF.row)
+                        {
+                            Console.Beep();
+                            Console.SetCursorPosition(trap.col, trap.row);
+                            Console.Write(" ");
+                            Console.SetCursorPosition(PUF.col, PUF.row);
+                            Console.Write(" ");
+                            //If the snake's head intercepts the location of the Power up food that add lives
+                            //make new PUF and new trap
+                            trap = MakeTrap(randomNumbersGenerator, obstacles, snakeElements); 
+                            PUF = MakePowerUpFood(randomNumbersGenerator, obstacles, snakeElements); 
+                            lives += 1;
                         }
 
                         //Replace mainloop = GameOver(obstacles, snakeElements, snakeNewHead, userPoints, userName) with below code; 
