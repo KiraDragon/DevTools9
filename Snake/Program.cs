@@ -170,7 +170,7 @@ namespace Snake
 
         static public Level WinCondition(string username, int userpoints, Level level)
         {
-                if(level == Level.One && userpoints >= 100)
+                if(level == Level.One && userpoints >= 50)
                 {
                     Console.SetCursorPosition(0, 0);
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -196,7 +196,7 @@ namespace Snake
                     else
                     {
                         return level;
-                    }
+                    }   
                     
                 }
                 else if(level == Level.Two && userpoints >= 200)
@@ -380,7 +380,7 @@ namespace Snake
                             Console.SetCursorPosition(4, x);
                             Console.ForegroundColor = ConsoleColor.Cyan;
                             Console.WriteLine("=");
-                        }
+                        }  
                         // right border
                         for (int x = 5; x < 26; x++)
                         {
@@ -651,7 +651,7 @@ namespace Snake
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Scoreboard"); 
-                    Console.WriteLine(); 
+                    Console.WriteLine();  
                     string[] lines = File.ReadAllLines("../../scoreboard.txt", Encoding.UTF8);
                     foreach(string line in lines)
                     {
