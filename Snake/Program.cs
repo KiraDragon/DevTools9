@@ -481,6 +481,7 @@ namespace Snake
                             lives = lives - 1;
                             if (lives <= 0)
                             {
+                                lives = 3;
                                 mainloop =  RealGameOver(obstacles, snakeElements, snakeNewHead, userPoints, userName);
                                 state = GameState.InMainMenu; 
                             }
