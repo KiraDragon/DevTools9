@@ -307,7 +307,7 @@ namespace Snake
             byte down = 2;
             byte up = 3;
             int lastFoodTime = 0;
-            int foodDissapearTime = 16000;
+            int foodDissapearTime = 20000;
             int negativePoints = 0;
             string userName;
             Console.WriteLine("Enter your name: ");
@@ -360,8 +360,7 @@ namespace Snake
                     }
 
                     int userPoints = 0;
-                    int time = 0;
-                    int seconds = 15;
+
                     bool mainloop = true; 
                     // Loops the game till it ends
                     while (mainloop)
@@ -398,22 +397,12 @@ namespace Snake
                         Console.WriteLine("Score: " + userPoints + " ");
                         Lives(lives);
 
-                        time++;
-                        if (time % 10 == 0)
-                        {
-                            seconds--;
-                            if (seconds == -1)
-                            {
-                                seconds = 15;
-                            }
-                        }
-
                         Console.SetCursorPosition(0, 0);
                         Console.ForegroundColor = ConsoleColor.Green;
-                        string thetimeTime = "Food time: ";
+                        string thetimeTime = "Ticker time: ";
                         Console.WriteLine("\n");
                         Console.Write(new string(' ', (Console.WindowWidth - thetimeTime.Length) / 2));
-                        Console.WriteLine(thetimeTime + seconds + " ");
+                        Console.WriteLine(thetimeTime + (Environment.TickCount - lastFoodTime).ToString() + " ");
 
                 
 
@@ -536,19 +525,16 @@ namespace Snake
                             if(determiner == 0)
                             {
                                 userPoints += 50;
-                                seconds = 15;
                             }
 
                              if(determiner == 1)
                             {
                                 userPoints += 100;
-                                seconds = 15;
                             }
 
                              if(determiner == 2)
                             {
                                 userPoints += 150;
-                                seconds = 15;
                             }
                             lastFoodTime = Environment.TickCount;
                             sleepTime--;
@@ -638,9 +624,13 @@ namespace Snake
                     Console.WriteLine(" "); 
                     Console.WriteLine("Your goal is to eat the food ( \u2665\u2665 ) before they disappear to grow in length");
                     Console.WriteLine(" ");
-                    Console.WriteLine("Dodge obstacles ( = ) and do not hit yourself or you'll lose a life, once your lives runs out, you lose.");
+                    Console.WriteLine("Dodge obstacles ( ▒ ) and do not hit yourself or you'll lose a life, once your lives runs out, you lose.");
                     Console.WriteLine(" ");
                     Console.WriteLine("The score is added each time a new food is eaten, and the final score is shown at game over");
+                    Console.WriteLine(" ");
+                    Console.WriteLine("You need to eat the food before the ticker hits 20000, or else points will be deducted!");
+                    Console.WriteLine(" ");
+                    Console.WriteLine("Traps and 1Ups ( # ) are on screen! One increases your life while the other decreases points! Choose carefully.");
                     Console.WriteLine(" ");
                     Console.WriteLine("Good luck!");
                     Console.WriteLine(" ");
